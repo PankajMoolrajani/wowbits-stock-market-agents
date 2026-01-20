@@ -1,0 +1,137 @@
+kind: tool
+name: run_llm
+description: A tool to run any LLM model using litellm
+type: PYTHON_FUNCTION
+python_function_name: run_llm
+
+---
+
+kind: tool
+name: get_stock_news
+description: A tool to get the news for the given stocks
+type: PYTHON_FUNCTION
+python_function_name: get_stock_news
+
+---
+
+kind: tool
+name: get_stock_price
+description: A tool to get the stock price for the given stocks using FMP API
+type: PYTHON_FUNCTION
+python_function_name: get_stock_price
+
+---
+
+kind: tool
+name: scrape_web_page
+description: A tool to scrape the web page for the given URL
+type: PYTHON_FUNCTION
+python_function_name: scrape_web_page
+
+
+---
+
+kind: skill
+name: get_stock_news
+config:
+  default_model: openai/gpt-4.1
+  exec_mode: llm
+  temperature: 0.1
+  max_output_tokens: 32000
+description: A skill to get the news for the given stocks
+tools:
+  - get_stock_news
+instructions: |
+  You will use the tool `get_stock_news` to get the links of news articles for the given tickers.
+
+---
+
+kind: skill
+name: scrape_web_page
+config:
+  default_model: openai/gpt-4.1
+  exec_mode: llm
+  temperature: 0.1
+  max_output_tokens: 32000
+description: A skill to scrape web pages and extract article content.
+tools:
+  - scrape_web_page
+instructions: |
+  You are a web page scraper.
+  You will use the tool `scrape_web_page` to scrape the article from the given URL.
+  Return the scraped content for further processing.
+
+---
+
+kind: skill
+name: summarize_stock_news_article
+config:
+  default_model: openai/gpt-4.1
+  exec_mode: llm
+  temperature: 0.1
+  max_output_tokens: 32000
+description: A skill to summarize stock news articles.
+tools:
+  - run_llm
+instructions: |
+  You are a stock news article summarizer.
+  You will use the tool `run_llm` to summarize the given article content.
+  The summary should focus on key points relevant to stock performance and market impact.
+
+---
+
+kind: skill
+name: analyze_stock_news_impact
+config:
+  default_model: openai/gpt-4.1
+  exec_mode: llm
+  temperature: 0.1
+  max_output_tokens: 32000
+description: A skill to analyze the impact of stock news on the stock price.
+tools:
+  - get_stock_price
+  - run_llm
+instructions: |
+  You will use the tool `get_stock_price` to get the stock price for the given stock. 
+  Pass the stock symbol as parameter.
+  Then you will use the tool `run_llm` to analyze the impact of the news on the stock price.
+
+
+---
+kind: skill
+name: get_stock_price
+config:
+  default_model: openai/gpt-4.1
+  exec_mode: llm
+  temperature: 0.1
+  max_output_tokens: 32000
+tools:
+  - get_stock_price
+instructions: |
+  You will use the tool `get_stock_price` to get the stock price for the given stock.
+  Pass the stock symbol as parameter.
+
+---
+
+kind: agent
+name: stock_news_monitor
+config:
+  default_model: openai/gpt-4.1
+  exec_mode: llm
+  temperature: 0.1
+  max_output_tokens: 32000
+description: An agent to monitor the stock news and analyze the impact on the stock price.
+skills:
+  - get_stock_price
+  - get_stock_news
+  - scrape_web_page
+  - summarize_stock_news_article
+  - analyze_stock_news_impact
+instructions: |
+  You will use the skill `get_stock_price` to get the stock price for the given stock.
+  You will use the skill `get_stock_news` to get the news for the given stocks.
+  Then you will use the skill `scrape_web_page` to scrape the article from the given URL.
+  Then you will use the skill `summarize_stock_news_article` to summarize the article content.
+  Then you will use the skill `analyze_stock_news_impact` to analyze the impact of the news on the stock price.
+
+---
