@@ -18,7 +18,7 @@ pip install --extra-index-url https://test.pypi.org/simple/ wowbits-cli==0.1.5
 
 ### 2. Install local dependencies to run functions
 ```
-pip instlal -r functions/reqirements.txt
+pip install -r functions/requirements.txt
 ```
 
 ### 3. Setup the env
@@ -34,4 +34,5 @@ wowbits create agent <agent-name> (agent name should be same as the yaml file un
 ### 4. Run agent
 ```
 wowbits run agent <agent-name>
+wowbits run agent stock_news_monitor
 ```
