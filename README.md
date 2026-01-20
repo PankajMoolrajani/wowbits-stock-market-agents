@@ -26,6 +26,11 @@ pip instlal -r functions/reqirements.txt
 wowbits setup
 ```
 
+### 4. Create agent (optional)
+```
+wowbits create agent <agent-name> (agent name should be same as the yaml file under agents/<agent-name.yaml>
+```
+
 ### 4. Run agent
 ```
 wowbits run agent <agent-name>
