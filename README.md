@@ -10,10 +10,11 @@ A collection of AI agents for stock market analysis and monitoring built with th
 ## Installation
 
 ### 1. Install wowbits CLI
+https://pypi.org/project/wowbits-cli/
 
 Install the wowbits command-line interface tool:
 ```
-pip install --extra-index-url https://test.pypi.org/simple/ wowbits-cli==0.1.5
+pip install wowbits-cli
 ```
 
 ### 2. Install local dependencies to run functions
@@ -28,11 +29,14 @@ wowbits setup
 
 ### 4. Create agent (optional)
 ```
-wowbits create agent <agent-name> (agent name should be same as the yaml file under agents/<agent-name.yaml>
+wowbits create agent <agent-name> (agent name should be same as the yaml file under agent_studio/<agent-name.yaml>
 ```
+
+```
+wowbits create agent stock_fundamentals
 
 ### 4. Run agent
 ```
 wowbits run agent <agent-name>
-wowbits run agent stock_news_monitor
+wowbits run agent stock_fundamentals
 ```
