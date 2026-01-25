@@ -1,5 +1,9 @@
 import os
+from dotenv import load_dotenv
 from litellm import completion
+
+# Load environment variables from .env file
+load_dotenv()
 
 def run_llm(model: str, message: str) -> str:
     """
@@ -30,3 +34,11 @@ def run_llm(model: str, message: str) -> str:
             
     except Exception as e:
         return f"Error running model {model}: {str(e)}"
+
+
+if __name__ == "__main__":
+    # Example: Get sentiment analysis for a stock on a specific date
+    stock_ticker = "AAPL"
+    date = "2024-01-15"
+    prompt = f"Analyze the market sentiment for {stock_ticker} stock on {date}. Provide a sentiment score (positive, negative, or neutral) and brief reasoning."
+    print(run_llm("xai/grok-3", prompt))
