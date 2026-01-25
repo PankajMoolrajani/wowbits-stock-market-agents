@@ -1,0 +1,92 @@
+kind: tool
+name: run_llm
+description: A tool to run any LLM model using litellm
+type: PYTHON_FUNCTION
+python_function_name: run_llm
+
+---
+
+kind: tool
+name: get_stock_fundamentals
+description: A tool to get the fundamental data for the given stock using FMP API
+type: PYTHON_FUNCTION
+python_function_name: get_stock_fundamentals
+
+---
+
+kind: tool
+name: get_stock_price
+description: A tool to get the stock price for the given stocks using FMP API
+type: PYTHON_FUNCTION
+python_function_name: get_stock_price
+
+---
+
+kind: skill
+name: get_stock_fundamentals
+config:
+  default_model: openai/gpt-4.1
+  exec_mode: llm
+  temperature: 0.1
+  max_output_tokens: 32000
+description: A skill to get the fundamental data for the given stock
+tools:
+  - get_stock_fundamentals
+instructions: |
+  You will use the tool `get_stock_fundamentals` to get the fundamental data for the given stock.
+  Pass the stock symbol as parameter.
+
+---
+
+kind: skill
+name: analyze_stock_fundamentals
+config:
+  default_model: openai/gpt-4.1
+  exec_mode: llm
+  temperature: 0.1
+  max_output_tokens: 32000
+description: A skill to analyze the fundamental data of a stock
+tools:
+  - run_llm
+instructions: |
+  You will use the tool `run_llm` to analyze the fundamental data of the stock.
+  Provide insights on key metrics like P/E ratio, revenue growth, profit margins, debt levels, and overall financial health.
+  Compare metrics to industry averages when relevant.
+
+---
+
+kind: skill
+name: get_stock_price
+config:
+  default_model: openai/gpt-4.1
+  exec_mode: llm
+  temperature: 0.1
+  max_output_tokens: 32000
+description: A skill to get the stock price for the given stock
+tools:
+  - get_stock_price
+instructions: |
+  You will use the tool `get_stock_price` to get the stock price for the given stock.
+  Pass the stock symbol as parameter.
+
+---
+
+kind: agent
+name: stock_fundamentals
+config:
+  default_model: openai/gpt-4.1
+  exec_mode: llm
+  temperature: 0.1
+  max_output_tokens: 32000
+description: An agent to get and analyze the fundamental data of a stock
+skills:
+  - get_stock_fundamentals
+  - analyze_stock_fundamentals
+  - get_stock_price
+instructions: |
+  You will use the skill `get_stock_fundamentals` to get the fundamental data for the given stock.
+  Then you will use the skill `analyze_stock_fundamentals` to analyze the fundamental data and provide insights.
+  You can also use the skill `get_stock_price` to get the current stock price for additional context.
+  Provide a comprehensive analysis of the stock's financial health and investment potential.
+
+---
