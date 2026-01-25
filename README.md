@@ -27,16 +27,19 @@ pip install -r functions/requirements.txt
 wowbits setup
 ```
 
-### 4. Create agent (optional)
+### 4. Create agent (one time only)
 ```
 wowbits create agent <agent-name> (agent name should be same as the yaml file under agent_studio/<agent-name.yaml>
-```
-
-```
 wowbits create agent stock_fundamentals
+```
 
-### 4. Run agent
+
+### 5. Run agent
 ```
 wowbits run agent <agent-name>
 wowbits run agent stock_fundamentals
 ```
+
+### 6. Test
+Go to 127.0.01:8000
+Select the agent and chat with it to test
