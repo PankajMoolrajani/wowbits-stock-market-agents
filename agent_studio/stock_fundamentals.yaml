@@ -1,4 +1,4 @@
-kind: tool
+kind: wowbits_tool
 name: run_llm
 description: A tool to run any LLM model using litellm
 type: PYTHON_FUNCTION
